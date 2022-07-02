@@ -20,10 +20,11 @@ Component and Techstack Used:
 ## Assumptions
 - Card Details validation logic follows the below rules:
   - A credit card number must have between 13 and 16 digits. It must start with:
-  - 4 for Visa cards
-  - 5 for Master cards
-  - 3 for American Express cards
-  - 6 for Discover cards
+  - A credit card can start with 4,5,3,6 as per the below list: 
+    - 4for Visa cards
+    - 5 for Master cards
+    - 3 for American Express cards
+    - 6 for Discover cards
 - CVV validation logic assumes the below rules:
   - CVV Should have 3 or 4 digits
   - It should have only digits between 0-9
@@ -36,7 +37,17 @@ Component and Techstack Used:
 - IDs generated for payment is of type `UUID`
 - APIs are secured using the API Keys. Valid apikeys: `apiKey1`,`apiKey2`
 - API Documentation is generated in Open API Specification format. Please see the `Running the solution to access the Open API Specification`
-
+- RESTful API Principles are followed:
+  - Resource name are based on Noun
+  - Operations on the resource  is defined via HTTP actions
+  - API is versioned to accommodate any upcoming changes
+  - Response code is as per the standards i.e. 
+    - 201 for successful POST
+    - 200 for successful GET
+    - 400 for any invalid data
+    - 404 for resource not found
+    - 401 for unauthorized access
+    - 500 for any application error
 
 ## Pre-requisite to run the solution
 - Java11
@@ -59,7 +70,7 @@ Component and Techstack Used:
   - Get  Card Info Query: `select * from card_info;`
 
 ## Steps to build the jar 
-`Note: I have already provided the runnable jar in the root folder, if you are interested in building the application please find the steps below`
+**Note**: I have already provided the runnable jar in the root folder, if you are interested in building the application please find the steps below`
 - Make sure you are on the root of the project
 - Run task to get the 7.4 gradle version  : `gradle wrapper --gradle-version 7.2`
 - Run : `./gradlew clean build`
@@ -67,6 +78,7 @@ Component and Techstack Used:
 - Navigate to `build/libs`
 - Execute jar from commandline: `java -jar checkout_payment_gateway-1.0-SNAPSHOT.jar`
 - Run application without build : `./gradlew bootRun`
+- Run testcases without build : `./gradlew test`
 
 ## Areas of Improvements
 Given the time limit only a set aspects of the solution is being implemented. Below are the some key areas of improvement in the current implementation:
@@ -77,6 +89,13 @@ Given the time limit only a set aspects of the solution is being implemented. Be
 - More testcases can be added to increase the coverage
 - More business logic can be added to make the solution robust. For e.g. Luhn algorithm to check the card number validity
 - Proper git branching strategy to followed to avoid any accidental changes to the main branch
+- More fine grain RBAC can be implemented based on the merchant resources
+- More exhaustive API error handling scenarios can be implemented like 429 (Spike Arrest), 405 Method Not allowed etc.
+## Extra Mile/Bonus Tasks 
+- Implemented API Key Based Authentication Mechanism
+- Implemented ActiveMQ based event driven pattern to communicate between Payment Gateway and Bank Simulator
+- Incorporated automated Open API Spec generation, so that any changes to the code will be reflected automatically in the API spec
+- Implemented Health Check Endpoint to let the merchant know the APIs are up or down
 
 ## Cloud Technologies
 If this solution is to be designed at a production level, there are multiple options available to implement the solution. Below is just one set tools and technologies to achieve this
@@ -97,8 +116,8 @@ If this solution is to be designed at a production level, there are multiple opt
 - `AWS CodeDeploy` : CD pipeline to deploy generated artefacts to any environment
 - `AWS Autoscalar` : To scale the EKS nodes based on the traffic
 - `Terraform` : To automate the deployment of the infrastructure  
-
-### Other aspects of the solution to be considered:
+- `Auth0`, `Okta` : Stronger authentication mechanism like JWT based authentication along with mTLS can be used. Both OAuth0 an Okta provides such capability 
+### Other aspects to be considered:
 - For the solution to be highly available: MultiAZ setup is recommended
 - Solution to be compliant with PCI-DSS for storing any card related information
 - Solution has to be GDPR compliant
@@ -107,5 +126,10 @@ If this solution is to be designed at a production level, there are multiple opt
 - Solution should be secure enough and should be proved by different process like PenTest, Privileged Access Management, Tamperproofing of logs etc.
 - Performance and Stress testing for each component of the architecture
 - VM Images should be CIS(Level 1 or 2) compliant
+- Define API Versioning Strategy and key principles to be shared with the consumers
 
 The selection of the above tools and technologies depends on various factors like use cases, scale, context of the problem, cost, skill set availability etc.
+
+
+## Implementation Summary
+This section covers the key concepts/component of the code to easily understand the implementation

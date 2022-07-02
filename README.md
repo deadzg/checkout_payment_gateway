@@ -8,7 +8,6 @@ Component and Techstack Used:
 - `ActiveMQ Inmemory Queue` : Messaging Queue to enable the async behaviour between Payment Gateway and Acquiring Bank 
 - `Gradle`: Build tool for the java application
 
-
 ## Assumptions
 - Card Details validation logic follows the below rules:
   - A credit card number must have between 13 and 16 digits. It must start with:
@@ -95,7 +94,8 @@ Given the time limit only a set aspects of the solution is being implemented. Be
 - `AWS CodeDeploy` : CD pipeline to deploy generated artefacts to any environment
 - `AWS Autoscalar` : To scale the EKS nodes based on the traffic
 - `Terraform` : To automate the deployment of the infrastructure  
-Other aspects of the solution to be considered:
+
+- Other aspects of the solution to be considered:
 - For the solution to be highly available: MultiAZ setup is recommended
 - Solution to be compliant with PCI-DSS for storing any card related information
 - Solution has to be GDPR compliant

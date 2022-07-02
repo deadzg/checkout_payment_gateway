@@ -28,3 +28,6 @@ hs_err_pid*
 .gradle
 
 **/build/
+
+
+!checkout_payment_gateway-1.0-SNAPSHOT.jar

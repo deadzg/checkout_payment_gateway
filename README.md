@@ -32,8 +32,9 @@ Component and Techstack Used:
 
 ## Deliverables Summary
 1. Build an API that allows a merchant:
-   a. To process a payment through your payment gateway. - `Delivered using POST /v1/payments`
-   b. To retrieve details of a previously made payment. - `Delivered using GET /v1/payments/{paymentId}`
+- a. To process a payment through your payment gateway. - `Delivered using POST /v1/payments`
+- b. To retrieve details of a previously made payment. - `Delivered using GET /v1/payments/{paymentId}`
+
 2. Build a bank simulator to test your payment gateway API. - `Deliver using MockBankService`
 
 ## Pre-requisite to run the solution

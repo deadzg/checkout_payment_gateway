@@ -76,7 +76,7 @@ Given the time limit only a set aspects of the solution is being implemented. Be
 - Proper git branching strategy to followed to avoid any accidental changes to the main branch
 
 ## Cloud Technologies
-If this solution is to be designed at a production level, there are multiple options available to implement the solution. Below is just one set tools and technologies to achieve this: 
+`If this solution is to be designed at a production level, there are multiple options available to implement the solution. Below is just one set tools and technologies to achieve this` 
 - 
 - `AWS API Gateway`: For exposing the API endpoints to the public
 - `Route53` : To configure the domain for the APIs
@@ -93,5 +93,16 @@ If this solution is to be designed at a production level, there are multiple opt
 - `AWS DynamoDB`: For storing any payment information
 - `AWS CodeBuild`: CI pipeline to compile, run, build and generate the artefacts
 - `AWS CodeDeploy` : CD pipeline to deploy generated artefacts to any environment
+- `AWS Autoscalar` : To scale the EKS nodes based on the traffic
+- `Terraform` : To automate the deployment of the infrastructure  
+Other aspects of the solution to be considered:
+- For the solution to be highly available: MultiAZ setup is recommended
+- Solution to be compliant with PCI-DSS for storing any card related information
+- Solution has to be GDPR compliant
+- A BCDR(Business Continuity and Disaster Recovery) process to be defined by the organisation and the solution should comply to the defined process
+- Solution should be compliant with the defined NFRs by the organisation
+- Solution should be secure enough and should be proved by different process like PenTest, Privileged Access Management, Tamperproofing of logs etc.
+- Performance and Stress testing for each component of the architecture
+- VM Images should be CIS(Level 1 or 2) compliant
 
-The selection of the above tool and technologies purely depends various factors like usecases, scale, context of the problem, cost, skillsset availability etc.
+The selection of the above tools and technologies depends on various factors like use cases, scale, context of the problem, cost, skill set availability etc.

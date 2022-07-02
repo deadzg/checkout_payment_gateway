@@ -10,6 +10,13 @@ Component and Techstack Used:
 - `ActiveMQ Inmemory Queue` : Messaging Queue to enable the async behaviour between Payment Gateway and Acquiring Bank 
 - `Gradle`: Build tool for the java application
 
+## Deliverables Summary
+1. Build an API that allows a merchant:
+- a. To process a payment through your payment gateway. - `Delivered using POST /v1/payments`
+- b. To retrieve details of a previously made payment. - `Delivered using GET /v1/payments/{paymentId}`
+2. Build a bank simulator to test your payment gateway API. - `Delivered using MockBankService`
+
+
 ## Assumptions
 - Card Details validation logic follows the below rules:
   - A credit card number must have between 13 and 16 digits. It must start with:
@@ -30,12 +37,6 @@ Component and Techstack Used:
 - APIs are secured using the API Keys. Valid apikeys: `apiKey1`,`apiKey2`
 - API Documentation is generated in Open API Specification format. Please see the `Running the solution to access the Open API Specification`
 
-## Deliverables Summary
-1. Build an API that allows a merchant:
-- a. To process a payment through your payment gateway. - `Delivered using POST /v1/payments`
-- b. To retrieve details of a previously made payment. - `Delivered using GET /v1/payments/{paymentId}`
-
-2. Build a bank simulator to test your payment gateway API. - `Deliver using MockBankService`
 
 ## Pre-requisite to run the solution
 - Java11
@@ -78,8 +79,7 @@ Given the time limit only a set aspects of the solution is being implemented. Be
 - Proper git branching strategy to followed to avoid any accidental changes to the main branch
 
 ## Cloud Technologies
-`If this solution is to be designed at a production level, there are multiple options available to implement the solution. Below is just one set tools and technologies to achieve this` 
-- 
+If this solution is to be designed at a production level, there are multiple options available to implement the solution. Below is just one set tools and technologies to achieve this
 - `AWS API Gateway`: For exposing the API endpoints to the public
 - `Route53` : To configure the domain for the APIs
 - `ACM`: Generate the SSH certificates
@@ -98,7 +98,7 @@ Given the time limit only a set aspects of the solution is being implemented. Be
 - `AWS Autoscalar` : To scale the EKS nodes based on the traffic
 - `Terraform` : To automate the deployment of the infrastructure  
 
-- Other aspects of the solution to be considered:
+### Other aspects of the solution to be considered:
 - For the solution to be highly available: MultiAZ setup is recommended
 - Solution to be compliant with PCI-DSS for storing any card related information
 - Solution has to be GDPR compliant

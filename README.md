@@ -26,6 +26,8 @@ Component and Techstack Used:
   - `bank.response.queue` : Bank Simulator send an event with payment status `SUCCESS` or `FAILED` for a given paymentId
 - As the communication is async the Payment Gateway marks the initial status of Payment as `PENDING` when the request is received using `POST /v1/payments`
 - IDs generated for payment is of type `UUID`
+- APIs are secured using the API Keys. Valid apikeys: `apiKey1`,`apiKey2`
+- API Documentation is generated in Open API Specification format. Please see the `Running the solution to access the Open API Specification`
 
 ## Deliverables Summary
 1. Build an API that allows a merchant:
@@ -38,23 +40,58 @@ Component and Techstack Used:
 - Gradle 7.2
 - Prior to running the application on a machine make sure it has port `8080` unoccupied
 
-## Steps to build the jar
+## Running the solution
+- I have already compiled the code and added a runnable jar in the root folder, so there is no need to compile the code again.
 - Make sure you are on the root of the project
+- Execute jar from commandline: `java -jar checkout_payment_gateway-1.0-SNAPSHOT.jar`
+- Access Open API Spec UI : `http://localhost:8080/swagger-ui.html`
+- Access Open API Spec JSON : `http://localhost:8080/v3/api-docs`
+- Health Endpoint : `http://localhost:8080/actuator/health`
+- To access the H2 DB please find the details below:
+  - Access H2 DB Console: `http://localhost:8080/h2db-console/`
+  - H2 Database JDBC URL: `jdbc:h2:mem:payment-gateway-db`
+  - H2 UserName: `payment-gateway-user1`
+  - H2 Password: `payment-gateway-pass1`
+  - Get All Payments Query: `select * from payments;`
+  - Get  Card Info Query: `select * from card_info;`
+
+## Steps to build the jar 
+`Note: I have already provided the runnable jar in the root folder, if you are interested in building the application please find the steps below`
+- Make sure you are on the root of the project
+- Run task to get the 7.4 gradle version  : `gradle wrapper --gradle-version 7.2`
 - Run : `./gradlew clean build`
 - This will compile, run the test cases and build the executable jar
 - Navigate to `build/libs`
 - Execute jar from commandline: `java -jar checkout_payment_gateway-1.0-SNAPSHOT.jar`
-
-## Steps to run:
-- Run task to get the 7.4 gradle version  : `gradle wrapper --gradle-version 7.2`
-- Build Application : `./gradlew clean build`
-  - This will compile, run the test cases and build the executable jar
 - Run application without build : `./gradlew bootRun`
-- Access H2 DB Console: `http://localhost:8080/h2db-console/`
-- H2 Database JDBC URL: `jdbc:h2:mem:payment-gateway-db`
-- H2 UserName: `payment-gateway-user1`
-- H2 Password: `payment-gateway-pass1`
-- Get All Payments Query: `select * from payments;`
-- Access Open API Spec UI : `http://localhost:8080/swagger-ui.html`
-- Access Open API Spec JSON : `http://localhost:8080/v3/api-docs`
-- Health Endpoint : `http://localhost:8080/actuator/health`
+
+## Areas of Improvements
+Given the time limit only a set aspects of the solution is being implemented. Below are the some key areas of improvement in the current implementation:
+- API Rate Limiter can be added to limit the number of request per Merchant. The requirement is generally driven by the API Pricing Models
+- Based on the deployment environment, the build be can dockerized
+- To ensure the code quality, the solution can be run through SonarQube
+- To make sure to consistent coding guidelines are followed in the organisation it can be run through checkstyle plugin
+- More testcases can be added to increase the coverage
+- More business logic can be added to make the solution robust. For e.g. Luhn algorithm to check the card number validity
+- Proper git branching strategy to followed to avoid any accidental changes to the main branch
+
+## Cloud Technologies
+If this solution is to be designed at a production level, there are multiple options available to implement the solution. Below is just one set tools and technologies to achieve this: 
+- 
+- `AWS API Gateway`: For exposing the API endpoints to the public
+- `Route53` : To configure the domain for the APIs
+- `ACM`: Generate the SSH certificates
+- `AWS EKS` :  Manged Kubernetes Service acting as an container orchestration layer to deploy different microservices For e.g: Payment Ingestion, Payment Process , BankAdaptor etc. 
+- `AWS ECR` : Managed Docker Registry to store the artifacts and ensure the same artefact is promoted from lower environments till production.
+- `Confluent Cloud for Kafka`: To publish, subscribe or for any event streaming capability
+- `Service Mesh (like Istio or Linkerd)`: If the organisation has multiple microservices, a service mesh is recommended approach to tackle the problemts associated with back presseure, retry mechanism etc.
+- `AWS VPC` : To make sure microservices are not exposed to internet and exposed only via Load balancers
+- `AWS ALB` : Exposed to internet to receive any API request
+- `AWS CloudWatch Logs` : For any Application and Infrastructure Monitoring
+- `AWS CloudWatch Alarms` : For getting alerted on any specific API usage metrics
+- `Hashicorp Vault` : For storing any DB credentials or external provider service API keys
+- `AWS DynamoDB`: For storing any payment information
+- `AWS CodeBuild`: CI pipeline to compile, run, build and generate the artefacts
+- `AWS CodeDeploy` : CD pipeline to deploy generated artefacts to any environment
+
+The selection of the above tool and technologies purely depends various factors like usecases, scale, context of the problem, cost, skillsset availability etc.

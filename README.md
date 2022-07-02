@@ -1,6 +1,8 @@
 # Solution Overview
 Payment Gateway Checkout
 
+![High Level Diagram](./Payment-Gateway-Component.png)
+
 Component and Techstack Used:
 - `Java` : Programming language used to code solution
 - `SpringBoot` : Framework used to build the REST API for Payment Gateway

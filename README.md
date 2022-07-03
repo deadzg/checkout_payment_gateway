@@ -48,7 +48,7 @@ Component and Techstack Used:
     - 404 for resource not found
     - 401 for unauthorized access
     - 500 for any application error
-  - Card masking is done with first  75% of the cardNumber being masked
+- Card masking is done with first  75% of the cardNumber being masked
 
 ## Pre-requisite to run the solution
 - Java11
@@ -91,8 +91,10 @@ Given the time limit only a set aspects of the solution is being implemented. Be
 - More testcases can be added to increase the coverage
 - More business logic can be added to make the solution robust. For e.g. Luhn algorithm to check the card number validity
 - Proper git branching strategy to followed to avoid any accidental changes to the main branch
-- More fine grain RBAC can be implemented based on the merchant resources
+- Fine grain RBAC can be implemented based on the merchant resources
 - More exhaustive API error handling scenarios can be implemented like 429 (Spike Arrest), 405 Method Not allowed etc.
+- Retry mechanism can be introduced while connecting with BankService
+- More number of Mock Scenarios can be in the Bank Simulator
 ## Extra Mile/Bonus Tasks 
 - Implemented API Key Based Authentication Mechanism
 - Implemented ActiveMQ based event driven pattern to communicate between Payment Gateway and Bank Simulator

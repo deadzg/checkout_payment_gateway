@@ -35,7 +35,7 @@ public class PaymentGatewayService implements IPaymentGatewayService{
     private MerchantRepository merchantRepository;
 
     @Autowired
-    public PaymentRepository paymentRepository;
+    private PaymentRepository paymentRepository;
 
     @Override
     public PaymentPostResponse createPayment(Payment payment, String apiKey) {
@@ -47,12 +47,15 @@ public class PaymentGatewayService implements IPaymentGatewayService{
 //        logger.info("Payment Service: CVV Validity : {}", PaymentGatewayUtility.isValidCVVNumber(payment.getCardInfo().getCvv()));
 
         if(PaymentGatewayUtility.isValidCreditCardNumber(payment.getCardInfo().getCardNumber()) &&
-                        PaymentGatewayUtility.isValidCVVNumber(payment.getCardInfo().getCvv())) {
+                        PaymentGatewayUtility.isValidCVVNumber(payment.getCardInfo().getCvv()) &&
+                        PaymentGatewayUtility.isCardDateValid(payment.getCardInfo().getExpiryMonth(), payment.getCardInfo().getExpiryYear())) {
             logger.info("Valid card details");
-        } else {
-            logger.info("Invalid card details");
-            throw new InvalidPaymentInfoException("Card details are incorrect");
+            logger.info("Expiry Month:{}", payment.getCardInfo().getExpiryMonth());
+            logger.info("Expiry Month:{}", payment.getCardInfo().getExpiryYear());
 
+        } else {
+            logger.error("Invalid card details");
+            throw new InvalidPaymentInfoException("Card details are incorrect");
         }
 
         MerchantInfo merchantInfo = merchantRepository.findByApiKey(apiKey);
@@ -83,7 +86,8 @@ public class PaymentGatewayService implements IPaymentGatewayService{
         return new PaymentPostResponse(paymentId);
     }
 
-    @Override public Payment fetchPayment(UUID paymentId) {
+    @Override
+    public Payment fetchPayment(UUID paymentId) {
         Optional<Payment> payment = paymentRepository.findById(paymentId);
         if(payment.isPresent()) {
             payment.get().getCardInfo().setCardNumber(PaymentGatewayUtility.maskCardNumber(payment.get().getCardInfo().getCardNumber()));
@@ -94,7 +98,8 @@ public class PaymentGatewayService implements IPaymentGatewayService{
         }
     }
 
-    @Override public void updatePaymentStatus(UUID paymentId, String status) {
+    @Override
+    public void updatePaymentStatus(UUID paymentId, String status) {
         Optional<Payment> payment = paymentRepository.findById(paymentId);
         if(payment.isPresent()) {
             payment.get().setStatus(status);

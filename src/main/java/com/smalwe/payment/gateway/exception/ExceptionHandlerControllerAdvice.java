@@ -15,6 +15,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -22,9 +23,15 @@ import javax.naming.AuthenticationException;
 import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.List;
-@Order(Ordered.HIGHEST_PRECEDENCE)
+
 @ControllerAdvice
 public class ExceptionHandlerControllerAdvice extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> defaultHandleException(Exception ex, WebRequest request) {
+        ApiError errors = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+        return new ResponseEntity<Object>(errors, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @ExceptionHandler({PersistenceException.class})
     public ResponseEntity<Object> handlePersistenceException(PersistenceException ex, WebRequest request) {
@@ -41,15 +48,16 @@ public class ExceptionHandlerControllerAdvice extends ResponseEntityExceptionHan
     }
 
     protected ResponseEntity<Object> handleHttpMessageNotReadable (HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ApiError errors = new ApiError(HttpStatus.BAD_REQUEST, "Invalid Json via controller advice");
+        ApiError errors = new ApiError(HttpStatus.BAD_REQUEST, "Invalid Request Payload");
         return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({InvalidPaymentInfoException.class})
-    protected ResponseEntity<ApiError> handleInvalidPaymentInfo (InvalidPaymentInfoException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    @ExceptionHandler({InvalidPaymentInfoException.class, NullPointerException.class})
+    protected ResponseEntity<ApiError> handleInvalidPaymentInfo (InvalidPaymentInfoException ex, WebRequest request) {
+        logger.info("In handleInvalidPaymentInfo");
         ApiError errors = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
-        return new ResponseEntity<ApiError>(errors, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
     protected ResponseEntity<Object> handleMethodArgumentNotValid(

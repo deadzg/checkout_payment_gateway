@@ -63,4 +63,24 @@ public class PaymentGatewayUtilityTest {
     public void testIsValidCVVNumber_Invalid_Empty() {
         assertFalse(PaymentGatewayUtility.isValidCVVNumber(""));
     }
+
+    @Test
+    public void testIsCardDateValid_Valid_FutureDate() {
+        assertTrue(PaymentGatewayUtility.isCardDateValid(12, 2023));
+    }
+
+    @Test
+    public void testIsCardDateValid_Valid_CurrentYear_FutureMonth() {
+        assertTrue(PaymentGatewayUtility.isCardDateValid(12, 2022));
+    }
+
+    @Test
+    public void testIsCardDateValid_InValid_PastDate() {
+        assertFalse(PaymentGatewayUtility.isCardDateValid(12, 2021));
+    }
+
+    @Test
+    public void testIsCardDateValid_InValid_CurrentYear_PastMonth() {
+        assertFalse(PaymentGatewayUtility.isCardDateValid(05, 2022));
+    }
 }

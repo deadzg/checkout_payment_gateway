@@ -1,0 +1,227 @@
+{
+	"info": {
+		"_postman_id": "c2a69957-2afa-4be3-b59e-21e730212793",
+		"name": "Checkout Payment Gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST payment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "API_KEY",
+						"value": "apikey1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"cardInfo\": {\n    \"cardNumber\": \"123456789\",\n    \"expiryMonth\": \"1\",\n    \"expiryYear\": 2022,\n    \"cvv\": \"234\"\n  },\n  \"amount\": 15,\n  \"currency\": 1.0,\n  \"description\": \"Purchased Shoes\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST payment Bad Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "API_KEY",
+						"value": "apikey1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"cardInfo\": {\n    \"cardNumber\": \"123456789\",\n    \"expiryMonth\": \"1\",\n    \"expiryYear\": 2022,\n    \"cvv\": \"234\"\n  },\n  \"amount\": 15,\n  \"currency\": 1.0,\n  \"description\": \"Purchased Shoes\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST payment UnAuthorized",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "API_KEY",
+						"value": "apikey3",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"cardInfo\": {\n    \"cardNumber\": \"123456789\",\n    \"expiryMonth\": \"1\",\n    \"expiryYear\": 2022,\n    \"cvv\": \"234\"\n  },\n  \"amount\": 15,\n  \"currency\": 1.0,\n  \"description\": \"Purchased Shoes\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST payment Invalid Year",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "API_KEY",
+						"value": "apikey1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"cardInfo\": {\n    \"cardNumber\": \"123456789\",\n    \"expiryMonth\": \"1\",\n    \"expiryYear\": 2022,\n    \"cvv\": \"234\"\n  },\n  \"amount\": 15,\n  \"currency\": 1.0,\n  \"description\": \"Purchased Shoes\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET payment",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "API_KEY",
+						"value": "apikey1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/payments/64e0ca1e-129d-4567-b7d1-591d6b5b88c6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"payments",
+						"64e0ca1e-129d-4567-b7d1-591d6b5b88c6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET payment Resource Not Found",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "API_KEY",
+						"value": "apikey1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/payments/64e0ca1e-129d-4567-b7d1-591d6b5b88c6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"payments",
+						"64e0ca1e-129d-4567-b7d1-591d6b5b88c6"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

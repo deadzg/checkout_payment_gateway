@@ -48,6 +48,7 @@ Component and Techstack Used:
     - 404 for resource not found
     - 401 for unauthorized access
     - 500 for any application error
+  - Card masking is done with first  75% of the cardNumber being masked
 
 ## Pre-requisite to run the solution
 - Java11
@@ -58,6 +59,7 @@ Component and Techstack Used:
 - I have already compiled the code and added a runnable jar in the root folder, so there is no need to compile the code again.
 - Make sure you are on the root of the project
 - Execute jar from commandline: `java -jar checkout_payment_gateway-1.0-SNAPSHOT.jar`
+- Postman collection can be directly loaded to run some basic test and can be found in the root folder: `CheckoutPaymentGateway.postman_collection.json` 
 - Access Open API Spec UI : `http://localhost:8080/swagger-ui.html`
 - Access Open API Spec JSON : `http://localhost:8080/v3/api-docs`
 - Health Endpoint : `http://localhost:8080/actuator/health`

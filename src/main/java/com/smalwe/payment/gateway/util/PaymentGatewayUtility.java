@@ -1,5 +1,6 @@
 package com.smalwe.payment.gateway.util;
 
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,5 +49,17 @@ public class PaymentGatewayUtility {
         int length = cardNumber.length() - cardNumber.length()/4;
         String s = cardNumber.substring(0, length);
         return s.replaceAll("[0-9]", "X") + cardNumber.substring(length);
+    }
+
+    public static boolean isCardDateValid(Integer month, Integer year) {
+        LocalDate currentDate = LocalDate.now();
+        if (year < currentDate.getYear()) {
+            return false;
+        } else if (year == currentDate.getYear()) {
+            if(month < currentDate.getMonthValue()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
